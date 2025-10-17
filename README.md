@@ -4,7 +4,6 @@ An Agent for Your Test Automation
 
 RAGTest-AI helps QA engineers and test automation developers save time, maintain consistency, and automatically extend their test coverage by understanding existing Java test automation code and generating new tests or explanations grounded in the codebase.
 
----
 
 ## Features
 
@@ -101,13 +100,5 @@ public void test_CreateAndVerifyHold() {
 
 ---
 
-## Contributing
 
-Contributions, issues, and feature requests are welcome. Please open a GitHub issue or submit a pull request with a clear description of your change.
-
----
-
-## License
-
-This project is open source. Add your license file (e.g., LICENSE) or update this section to reflect the chosen license.
 
