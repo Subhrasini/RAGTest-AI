@@ -2,7 +2,7 @@
 
 An Agent for Your Test Automation
 
-RAGTest-AI helps QA engineers and test automation developers save time, maintain consistency, and automatically extend their test coverage by understanding existing Java test automation code and generating new tests or explanations grounded in the codebase.
+RAGTest-AI helps QA engineers and test automation developers save time, maintain consistency, and automatically extend their test coverage by understanding existing their test automation code/page object model and generating new tests or explanations grounded in the codebase.
 
 
 ## Features
@@ -96,10 +96,15 @@ python AllSteps.py
 
 
 @Test
+
 public void test_CreateAndVerifyHold() {
+
     HoldOperations holdOps = new HoldOperations();
+    
     holdOps.Hold_CreateHold("Automation_Hold");
+    
     holdOps.Hold_SearchHold("Automation_Hold");
+    
     holdOps.Hold_VerifyHoldDetails();
 }
 
