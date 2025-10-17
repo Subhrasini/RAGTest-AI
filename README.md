@@ -22,7 +22,7 @@ RAGTest-AI helps QA engineers and test automation developers save time, maintain
 
 •	Strict Output Control – Ensures only valid Test Automation code
 
-•	OpenSource
+•	OpenSource and light weight - It takes few minutes to setup this project and get started
 
 
 
