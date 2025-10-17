@@ -7,14 +7,25 @@ RAGTest-AI helps QA engineers and test automation developers save time, maintain
 
 ## Features
 
-- Retrieval-Augmented Generation (RAG) for code-aware responses
-- Semantic code search with ChromaDB
-- Automatic indexing and intelligent chunking of .java files
-- Context-aware test generation (ensures correct names/signatures)
-- Multi-step planning for complex requests
-- Strict output control to produce valid test methods only
 
----
+•	Can generate test automation code in any language (like Java/.Net/Python/JavaScript) using any test framework (like TestNG,Nunit,BDD) .
+
+•	Automatic Code Indexing – Scans and chunks .java files intelligently
+
+•	RAG-based Code Retrieval – Uses semantic search via ChromaDB
+
+•	Context-Aware Test Generation – Builds new tests from real examples
+
+•	Smart Query Classification – Distinguishes between search vs generation
+
+•	Multi-Step Planning – Decomposes complex user requests
+
+•	Strict Output Control – Ensures only valid Test Automation code
+
+•	OpenSource
+
+
+
 
 ## How it works
 
@@ -26,22 +37,22 @@ RAGTest-AI helps QA engineers and test automation developers save time, maintain
    - Synthesizes an explanation or a new test method (uses Gemini 2.0 Flash).
 3. All outputs are grounded in your existing classes and methods for accuracy.
 
----
+
 
 ## Project structure
 
 - AllSteps.py – Main orchestration script
 - test_code/ – Folder containing your existing test files (Java)
 - chroma_code_index/ – Chroma vector store directory (auto-generated)
-- .env – Environment file for API keys
+- .env – Environment file for Google API keys
 
----
+
 
 ## Getting started
 
 Prerequisites
 - Python 3.9+
-- A Google Cloud project with a Generative AI key
+- A Google Generative AI key from https://aistudio.google.com/api-keys
 
 1) Create a .env file in the repo root with at least:
 
@@ -49,12 +60,14 @@ Prerequisites
 GOOGLE_API_KEY=your_api_key_here
 ```
 
-2) Install dependencies (example):
+2) Run the below steps:
 
 ```bash
 python -m venv venv
-source venv/bin/activate  # on Windows: .\venv\Scripts\Activate
-pip install -r requirements.txt
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+.\venv\Scripts\Activate
+python .\AllSteps.py
+
 ```
 
 3) Configure AllSteps.py variables as needed (defaults shown):
@@ -81,7 +94,7 @@ python AllSteps.py
 
 ## Example output (Java)
 
-```java
+
 @Test
 public void test_CreateAndVerifyHold() {
     HoldOperations holdOps = new HoldOperations();
@@ -89,8 +102,7 @@ public void test_CreateAndVerifyHold() {
     holdOps.Hold_SearchHold("Automation_Hold");
     holdOps.Hold_VerifyHoldDetails();
 }
-```
----
+
 
 ## Notes & configuration tips
 
