@@ -1,99 +1,88 @@
-RAGTest-AI 
+# RAGTest-AI
+
 An Agent for Your Test Automation
 
-RAGTest-AI helps QA engineers and test automation developers save time, maintain consistency, and automatically extend their test coverage.
+RAGTest-AI helps QA engineers and test automation developers save time, maintain consistency, and automatically extend their test coverage by understanding existing Java test automation code and generating new tests or explanations grounded in the codebase.
 
-🧠 Overview
-RAGTest-AI is an intelligent assistant that understands your Java test automation code.
+---
 
-It uses Retrieval-Augmented Generation (RAG) to:
+## Features
 
-🔍 Search through your codebase
+- Retrieval-Augmented Generation (RAG) for code-aware responses
+- Semantic code search with ChromaDB
+- Automatic indexing and intelligent chunking of .java files
+- Context-aware test generation (ensures correct names/signatures)
+- Multi-step planning for complex requests
+- Strict output control to produce valid test methods only
 
-💬 Answer natural-language questions about existing tests
+---
 
-🧪 Generate new @Test / [Test] methods using context from your existing code
+## How it works
 
-🚀 Key Features
-🌐 Generates test automation code in any language (Java, .NET, Python, JavaScript) using any framework (TestNG, NUnit, BDD)
+1. The assistant indexes your automation code into a Chroma vector store.
+2. On each request it:
+   - Classifies the request (search vs. generation).
+   - Generates a plan for complex tasks.
+   - Retrieves relevant code snippets from the vector store.
+   - Synthesizes an explanation or a new test method (uses Gemini 2.0 Flash).
+3. All outputs are grounded in your existing classes and methods for accuracy.
 
-📁 Automatic Code Indexing – Scans and chunks .java files intelligently
+---
 
-🔎 RAG-based Code Retrieval – Uses semantic search via ChromaDB
+## Project structure
 
-🧠 Context-Aware Test Generation – Builds new tests from real examples
+- AllSteps.py – Main orchestration script
+- test_code/ – Folder containing your existing test files (Java)
+- chroma_code_index/ – Chroma vector store directory (auto-generated)
+- .env – Environment file for API keys
 
-🧭 Smart Query Classification – Distinguishes between search vs generation
+---
 
-🧩 Multi-Step Planning – Decomposes complex user requests
+## Getting started
 
-✅ Strict Output Control – Ensures only valid Java @Test method code
+Prerequisites
+- Python 3.9+
+- A Google Cloud project with a Generative AI key
 
-👐 Open Source
+1) Create a .env file in the repo root with at least:
 
-⚙️ How It Works
-Loads your existing automation test code into a vector store (Chroma).
-
-Upon receiving a request:
-
-Classifies it (simple vs complex)
-
-Generates a plan (if complex)
-
-Retrieves relevant code snippets
-
-Synthesizes a new test or explanation using Gemini 2.0 Flash
-
-Each response is grounded in your existing classes and methods, ensuring naming accuracy and context alignment.
-
-📁 Project Structure
-File / Folder	Description
-AllSteps.py	Main orchestration script
-test_code/	Folder containing your existing test files
-chroma_code_index/	Vector store directory
-.env	Contains your Google API key
-🛠️ Getting Started
-1. Prerequisites
-Python 3.9+
-
-A Google Cloud project with a Generative AI key
-
-.env file containing:
-
-env
+```
 GOOGLE_API_KEY=your_api_key_here
-2. Install Dependencies
-Make sure Python is installed on your machine.
+```
 
-3. Configuration in AllSteps.py
-Variable	Description	Default
-CODE_FOLDER_PATH	Directory containing .java test files	./test_code/
-VECTOR_STORE_PATH	Directory for Chroma vector index	chroma_code_index
-batch_size	Number of files per embedding batch	5
-score_threshold	Similarity filter for retrieval	0.5
-./test_code/ – Add existing automation scripts
+2) Install dependencies (example):
 
-chroma_code_index – Automatically generated when AllSteps.py is executed
-
-score_threshold – Can be adjusted based on results
-
-synthesis_prompt_template – Update according to your test language/framework
-
-4. Run the Assistant
-bash
+```bash
 python -m venv venv
-Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
-.\venv\Scripts\Activate
-python .\AllSteps.py
-💡 Example Inputs
-Generate a new test to verify login with invalid credentials
+source venv/bin/activate  # on Windows: .\venv\Scripts\Activate
+pip install -r requirements.txt
+```
 
-Explain what TC_721004B does
+3) Configure AllSteps.py variables as needed (defaults shown):
 
-Create a test that creates a Hold and then deletes it
+- CODE_FOLDER_PATH: ./test_code/
+- VECTOR_STORE_PATH: chroma_code_index
+- batch_size: 5
+- score_threshold: 0.5
 
-✅ Example Output
-java
+Adjust synthesis_prompt_template for your target language/framework if required.
+
+4) Run the assistant:
+
+```bash
+python AllSteps.py
+```
+---
+
+## Example inputs
+
+- "Generate a new test to verify login with invalid credentials"
+- "Explain what TC_721004B does"
+- "Create a test that creates a Hold and then deletes it"
+
+## Example output (Java)
+
+```java
 @Test
 public void test_CreateAndVerifyHold() {
     HoldOperations holdOps = new HoldOperations();
@@ -101,3 +90,24 @@ public void test_CreateAndVerifyHold() {
     holdOps.Hold_SearchHold("Automation_Hold");
     holdOps.Hold_VerifyHoldDetails();
 }
+```
+---
+
+## Notes & configuration tips
+
+- chroma_code_index is generated when AllSteps.py builds the vector store — remove or recreate it if you change embedding logic.
+- Increase/decrease score_threshold to tune retrieval precision.
+- Update synthesis_prompt_template to match your preferred test language/framework (TestNG, JUnit, NUnit, PyTest, etc.).
+
+---
+
+## Contributing
+
+Contributions, issues, and feature requests are welcome. Please open a GitHub issue or submit a pull request with a clear description of your change.
+
+---
+
+## License
+
+This project is open source. Add your license file (e.g., LICENSE) or update this section to reflect the chosen license.
+
